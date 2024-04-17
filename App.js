@@ -16,13 +16,20 @@ const app = express();
 app.use(cors({
     credentials: true,
     origin: process.env.FRONTEND_URL,
-}));
+})
+);
 app.use(express.json());
 const sessionOptions = {
     secret: process.env.SESSION_SECRET,
     resave: false,
-    saveUnitinialized: false,
-};
+    saveUninitialized: false,
+    proxy: true,
+    cookie: {
+        sameSite: "none",
+        secure: true,
+        //domain: "https://kanbas-node-server-app-gas8.onrender.com",
+    },
+}
 if (process.env.NODE_ENV !== "development") {
     sessionOptions.proxy = true;
     sessionOptions.cookie = {

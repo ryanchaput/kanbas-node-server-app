@@ -4,11 +4,18 @@ function QuizRoutes(app) {
         const { mid } = req.params;
         const quizIndex = db.quizzes.findIndex(
             (m) => m._id === mid);
+        console.log(quizIndex);
         db.quizzes[quizIndex] = {
             ...db.quizzes[quizIndex],
             ...req.body
         };
         res.sendStatus(204);
+    });
+
+    app.get("/api/quizzes/:qid", (req, res) => {
+        const { qid } = req.params;
+        const quiz = db.quizzes.find((m) => m._id === qid);
+        res.send(quiz);
     });
 
     app.delete("/api/quizzes/:mid", (req, res) => {
